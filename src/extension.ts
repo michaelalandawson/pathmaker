@@ -8,10 +8,10 @@ class PathQuickPickItem implements QuickPickItem {
 	detail: string;
 	action: string;
 
-	constructor(pathName: string, path: string, pathAction: string) {
-		this.label = pathName;
+	constructor(transformationName: string, path: string, transformationAction: string) {
+		this.label = transformationName;
 		this.detail = path;
-		this.action = pathAction;
+		this.action = transformationAction;
 	}
 }
 
