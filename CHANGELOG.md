@@ -19,3 +19,7 @@ Add editor view context menu item.
 ## 0.2.3
 
 Change action from Open to Browse.
+
+## 0.3.0
+
+Add icons to quick pick list items.
