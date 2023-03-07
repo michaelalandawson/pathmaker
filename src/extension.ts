@@ -58,10 +58,10 @@ function buildQickPickOptions(resource: any) {
 		return;
 	}
 
+	const transformations: Transformation[] = config.get('transformations') || [];
+
 	let opts: QuickPickOptions = { matchOnDescription: true, matchOnDetail: true, placeHolder: 'Select an action...', title: 'PathMaker' };
 	let items: PathQuickPickItem[] = [];
-
-	const transformations: [] = config.get('transformations') || [];
 
 	transformations.forEach((transformation: Transformation) => {
 		let workPath = resource.fsPath.replaceAll('\\', '/');
