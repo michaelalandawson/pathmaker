@@ -3,6 +3,18 @@ import Window = vscode.window;
 import QuickPickItem = vscode.QuickPickItem;
 import QuickPickOptions = vscode.QuickPickOptions;
 
+class PathQuickPickItem implements QuickPickItem {
+	label: string;
+	detail: string;
+	action: string;
+
+	constructor(pathName: string, path: string, pathAction: string) {
+		this.label = pathName;
+		this.detail = path;
+		this.action = pathAction;
+	}
+}
+
 type Transformation = {
 	name: string;
 	actions: [action: string];
@@ -47,7 +59,7 @@ function buildQickPickOptions(resource: any) {
 	}
 
 	let opts: QuickPickOptions = { matchOnDescription: true, matchOnDetail: true, placeHolder: 'Select an action...', title: 'PathMaker' };
-	let items: QuickPickItem[] = [];
+	let items: PathQuickPickItem[] = [];
 
 	const transformations: [] = config.get('transformations') || [];
 
@@ -65,8 +77,8 @@ function buildQickPickOptions(resource: any) {
 			}
 		});
 
-		actions.forEach((action: string) => {
-			items.push({ label: `${action === 'Copy' ? `$(clippy)` : `$(globe)`} ${action} ${transformation.name}`, detail: workPath });
+		actions.forEach((action: string, index: number) => {
+			items.push(new PathQuickPickItem(`${action.toLocaleLowerCase() === 'copy' ? `$(clippy)` : `$(globe)`} ${action} ${transformation.name}`, workPath, action));
 		});
 	});
 
@@ -75,21 +87,27 @@ function buildQickPickOptions(resource: any) {
 			return;
 		}
 
-		if (selection.label.indexOf('Copy ') > 0) {
-			vscode.env.clipboard.writeText(selection.detail as string);
-			return;
+		switch (selection.action.toLocaleLowerCase()) {
+			case 'copy':
+				vscode.env.clipboard.writeText(selection.detail as string);
+
+				return;
+
+			case 'browse':
+				try {
+					vscode.env.openExternal(vscode.Uri.parse(selection.detail as string));
+				} catch (error) {
+					vscode.window.showErrorMessage(`${selection.detail} is not a valid URL.`);
+				}
+
+				return;
+
+			default:
+				Window.showErrorMessage(`Incorrect configuration.`);
+
+				break;
 		}
 
-		if (selection.label.indexOf('Browse ') > 0) {
-			try {
-				vscode.env.openExternal(vscode.Uri.parse(selection.detail as string));
-			} catch (error) {
-				vscode.window.showErrorMessage(`${selection.detail} is not a valid URL.`);
-			}
-			return;
-		}
-
-		Window.showErrorMessage(`Incorrect configuration.`);
 		return;
 	});
 }
