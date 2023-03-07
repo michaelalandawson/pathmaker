@@ -91,10 +91,12 @@ function buildQickPickOptions(resource: any) {
 		});
 
 		actions.forEach((action: string, index: number) => {
+			const name = `${action.toLocaleLowerCase() === 'copy' ? `$(clippy)` : `$(globe)`} ${action} ${transformation.name}`;
+
 			if (isCompact) {
-				items.push(new PathQuickPickItemCompact(`${action.toLocaleLowerCase() === 'copy' ? `$(clippy)` : `$(globe)`} ${action} ${transformation.name}`, workPath, action));
+				items.push(new PathQuickPickItemCompact(name, workPath, action));
 			} else {
-				items.push(new PathQuickPickItem(`${action.toLocaleLowerCase() === 'copy' ? `$(clippy)` : `$(globe)`} ${action} ${transformation.name}`, workPath, action));
+				items.push(new PathQuickPickItem(name, workPath, action));
 			}
 		});
 	});
