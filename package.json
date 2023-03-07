@@ -22,8 +22,26 @@
 			{
 				"command": "pathmaker.showPathOptions",
 				"title": "PathMaker..."
+			},
+			{
+				"command": "pathmaker.explorerContextMenu",
+				"title": "PathMaker..."
 			}
 		],
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "pathmaker.explorerContextMenu",
+					"when": "false"
+				}
+			],
+			"explorer/context": [
+				{
+					"command": "pathmaker.explorerContextMenu",
+					"group": "6_copypath"
+				}
+			]
+		},
 		"configuration": {
 			"type": "object",
 			"properties": {

@@ -5,6 +5,11 @@ import QuickPickOptions = vscode.QuickPickOptions;
 
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerCommand('pathmaker.showPathOptions', showPathOptions));
+	context.subscriptions.push(vscode.commands.registerCommand('pathmaker.explorerContextMenu', explorerContextMenu));
+}
+
+function explorerContextMenu(resource: any) {
+	buildOptions(resource);
 }
 
 function showPathOptions() {
@@ -22,6 +27,10 @@ function showPathOptions() {
 		return;
 	}
 
+	buildOptions(resource);
+}
+
+function buildOptions(resource: any) {
 	let opts: QuickPickOptions = { matchOnDescription: true, matchOnDetail: true, placeHolder: 'Select an action...', title: 'PathMaker' };
 	let items: QuickPickItem[] = [];
 
@@ -50,8 +59,6 @@ function showPathOptions() {
 		if (!selection) {
 			return;
 		}
-
-		console.log(selection);
 
 		if (selection.label.indexOf('Copy ') === 0) {
 			vscode.env.clipboard.writeText(selection.description as string);
