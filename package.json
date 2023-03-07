@@ -73,7 +73,7 @@
 								"default": "Copy",
 								"enum": [
 									"Copy",
-									"Open"
+									"Browse"
 								]
 							},
 							"replacements": {

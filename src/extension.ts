@@ -62,7 +62,7 @@ function buildQickPickOptions(resource: any) {
 
 		if (selection.label.indexOf('Copy ') === 0) {
 			vscode.env.clipboard.writeText(selection.description as string);
-		} else if (selection.label.indexOf('Open ') === 0) {
+		} else if (selection.label.indexOf('Browse ') === 0) {
 			try {
 				vscode.env.openExternal(vscode.Uri.parse(selection.description as string));
 			} catch (error) {
