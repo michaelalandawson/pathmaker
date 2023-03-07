@@ -29,3 +29,7 @@ Add icons to quick pick list items.
 Initial release
 
 Add Regex support.
+
+### 2.0.0
+
+Refactor actions from string to string array. Multiple actions can now be specified for each transformation object.
