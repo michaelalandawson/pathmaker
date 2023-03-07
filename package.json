@@ -17,7 +17,47 @@
 				"command": "pathmaker.showPathOptions",
 				"title": "PathMaker..."
 			}
-		]
+		],
+		"configuration": {
+			"type": "object",
+			"properties": {
+				"pathmaker.transformations": {
+					"title": "Pathmaker path transformations",
+					"description": "Array of objects that will transform the path of the selected file.",
+					"type": "array",
+					"scope": "resource",
+					"items": {
+						"type": "object",
+						"properties": {
+							"name": {
+								"title": "Name",
+								"description": "Hint that will appear in the quick pick list",
+								"type": "string"
+							},
+							"replacements": {
+								"title": "Replacements",
+								"description": "Array of objects that contain find and replace strings",
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"find": {
+											"type": "string",
+											"description": "Characters to find"
+										},
+										"replace": {
+											"type": "string",
+											"description": "Replacement characters"
+										}
+									}
+								}
+							}
+						}
+					},
+					"default": []
+				}
+			}
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
