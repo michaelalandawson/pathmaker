@@ -62,14 +62,20 @@ function buildQickPickOptions(resource: any) {
 
 		if (selection.label.indexOf('Copy ') > 0) {
 			vscode.env.clipboard.writeText(selection.detail as string);
-		} else if (selection.label.indexOf('Browse ') > 0) {
+			return;
+		}
+
+		if (selection.label.indexOf('Browse ') > 0) {
 			try {
 				vscode.env.openExternal(vscode.Uri.parse(selection.detail as string));
 			} catch (error) {
 				vscode.window.showErrorMessage(`${selection.detail} is not a valid URL.`);
-				return;
 			}
+			return;
 		}
+
+		Window.showErrorMessage(`Incorrect configuration.`);
+		return;
 	});
 }
 
