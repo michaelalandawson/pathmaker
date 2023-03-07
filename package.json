@@ -2,19 +2,31 @@
 	"name": "pathmaker",
 	"publisher": "michaelalandawson",
 	"displayName": "PathMaker",
-	"description": "Generates and copies various paths based on the selected file.",
-	"version": "0.2.3",
+	"description": "An extension for Visual Studio Code that generates user-defined path variations based on the current editor or through the explorer view context menu. Generated paths, displayed in the Quick Pick menu, can then be copied to the clipboard or opened in the default browser.",
+	"version": "0.0.2",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/michaelalandawson/pathmaker.git"
 	},
+	"homepage": "https://github.com/michaelalandawson/pathmaker/blob/main/README.md",
 	"license": "SEE LICENSE FILE",
+	"bugs": {
+		"url": "https://github.com/michaelalandawson/pathmaker/issues"
+	},
 	"engines": {
 		"vscode": "^1.74.0"
 	},
 	"categories": [
 		"Other"
 	],
+	"keywords": [
+		"path",
+		"copy",
+		"browse",
+		"file",
+		"custom"
+	],
+	"qna": "marketplace",
 	"activationEvents": [],
 	"main": "./out/extension.js",
 	"contributes": {

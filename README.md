@@ -1,10 +1,8 @@
 # PathMaker
 
-An extension for Visual Studio Code that generates user-defined path variations based on the current editor or through the explorer view context menu. Generated paths can then be copied to the clipboard or opened in the default browser.
+An extension for Visual Studio Code that generates user-defined path variations based on the current editor or through the explorer view context menu. Generated paths, displayed in the Quick Pick menu, can then be copied to the clipboard or opened in the default browser.
 
-Why Pathmaker?
-
-[reasons for pathmaker]
+![PathMaker-readme](https://user-images.githubusercontent.com/39276677/219970869-6443d3ba-fd88-45a6-8087-b07fb986a654.gif)
 
 ## Features and Functionality
 
