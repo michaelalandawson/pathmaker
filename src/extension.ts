@@ -8,9 +8,21 @@ class PathQuickPickItem implements QuickPickItem {
 	detail: string;
 	action: string;
 
-	constructor(transformationName: string, path: string, transformationAction: string) {
+	constructor(transformationName: string, public path: string, transformationAction: string) {
 		this.label = transformationName;
 		this.detail = path;
+		this.action = transformationAction;
+	}
+}
+
+class PathQuickPickItemCompact implements QuickPickItem {
+	label: string;
+	description: string;
+	action: string;
+
+	constructor(transformationName: string, public path: string, transformationAction: string) {
+		this.label = transformationName;
+		this.description = path;
 		this.action = transformationAction;
 	}
 }
@@ -58,10 +70,11 @@ function buildQickPickOptions(resource: any) {
 		return;
 	}
 
+	const isCompact: boolean = config.get('compact') || false;
 	const transformations: Transformation[] = config.get('transformations') || [];
 
 	let opts: QuickPickOptions = { matchOnDescription: true, matchOnDetail: true, placeHolder: 'Select an action...', title: 'PathMaker' };
-	let items: PathQuickPickItem[] = [];
+	let items: (PathQuickPickItem | PathQuickPickItemCompact)[] = [];
 
 	transformations.forEach((transformation: Transformation) => {
 		let workPath = resource.fsPath.replaceAll('\\', '/');
@@ -78,7 +91,11 @@ function buildQickPickOptions(resource: any) {
 		});
 
 		actions.forEach((action: string, index: number) => {
-			items.push(new PathQuickPickItem(`${action.toLocaleLowerCase() === 'copy' ? `$(clippy)` : `$(globe)`} ${action} ${transformation.name}`, workPath, action));
+			if (isCompact) {
+				items.push(new PathQuickPickItemCompact(`${action.toLocaleLowerCase() === 'copy' ? `$(clippy)` : `$(globe)`} ${action} ${transformation.name}`, workPath, action));
+			} else {
+				items.push(new PathQuickPickItem(`${action.toLocaleLowerCase() === 'copy' ? `$(clippy)` : `$(globe)`} ${action} ${transformation.name}`, workPath, action));
+			}
 		});
 	});
 
@@ -89,15 +106,15 @@ function buildQickPickOptions(resource: any) {
 
 		switch (selection.action.toLocaleLowerCase()) {
 			case 'copy':
-				vscode.env.clipboard.writeText(selection.detail as string);
+				vscode.env.clipboard.writeText(selection.path as string);
 
 				return;
 
 			case 'browse':
 				try {
-					vscode.env.openExternal(vscode.Uri.parse(selection.detail as string));
+					vscode.env.openExternal(vscode.Uri.parse(selection.path as string));
 				} catch (error) {
-					vscode.window.showErrorMessage(`${selection.detail} is not a valid URL.`);
+					vscode.window.showErrorMessage(`${selection.path} is not a valid URL.`);
 				}
 
 				return;

@@ -66,6 +66,13 @@
 		"configuration": {
 			"type": "object",
 			"properties": {
+				"pathmaker.compact": {
+					"title": "Compact display",
+					"description": "If true, transformations will appear on one line in the QuickPick list.",
+					"type": "boolean",
+					"default": false,
+					"scope": "resource"
+				},
 				"pathmaker.transformations": {
 					"title": "PathMaker path transformations",
 					"description": "Array of objects that will transform the path of the selected file.",
