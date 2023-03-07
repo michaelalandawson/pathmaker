@@ -10,13 +10,8 @@ export function activate(context: vscode.ExtensionContext) {
 function showPathOptions() {
 	const editor = Window.activeTextEditor;
 
-	if (!editor) {
-		Window.showErrorMessage(`Open a file to use PathMaker.`);
-		return;
-	}
-
-	if (editor.document.isUntitled) {
-		Window.showErrorMessage(`File must be saved to use PathMaker.`);
+	if (!editor || editor.document.isUntitled) {
+		Window.showErrorMessage(`Open an existing file to use PathMaker.`);
 		return;
 	}
 
