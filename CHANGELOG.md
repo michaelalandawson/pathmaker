@@ -15,3 +15,7 @@ Rename commands and related functions.
 ## 0.2.2
 
 Add editor view context menu item.
+
+## 0.2.3
+
+Change action from Open to Browse.
