@@ -1,6 +1,6 @@
 {
 	"name": "pathmaker",
-	"publisher": "michaelalandawson",
+	"publisher": "MARSDawson",
 	"displayName": "PathMaker",
 	"description": "An extension for Visual Studio Code that generates user-defined path variations based on the current editor or through the explorer view context menu.",
 	"version": "2.0.0",
