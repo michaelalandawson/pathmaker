@@ -23,3 +23,9 @@ Change action from Open to Browse.
 ## 0.3.0
 
 Add icons to quick pick list items.
+
+### 1.0.0
+
+Initial release
+
+Add Regex support.
