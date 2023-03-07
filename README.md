@@ -23,55 +23,135 @@ If you find this extension to be useful, please consider supporting further deve
 
 ## Configuration
 
-Paths are generated using one or more transformations. Each transformation contains a name and an array of replacements.
+NOTE: *Path separators are normalized to "/" before any transformations are processed.*
 
-All transformations can be copied to the clipboard. Optionally, an action can be specified to open the generated path in the default browser.
+Paths are generated using one or more transformations. Each transformation can provide one or more replacements.
 
-Path separators are normalized to "/" before any user transformations are processed.
+A replacement can be either a simple string or a regular expression.
 
 ### Transformation properties:
 
 - "name": A custom name to describe the action. This will be displayed in the Quick Pick list.
-- "action": An array of actions. Values can be "Copy" or "Browse".
+- "actions": An array of actions. Values include "Copy" and "Browse".
   - ["Copy"]: Displays an option to copy the selected path to the clipboard.
   - ["Browse"]: Displays an option to open the selected path in the default browser.
   - ["Copy", "Browse"]: Displays options to copy or browse the selected path.
 - "replacements": An array of find/replace pairs. The replacements take place in the order of the array. Regular expressions are supported.
 
-### Sample configration:
+## Example Transformations
+
+### Local path to a remote URI
+
+Input: `c:\home\mydomain.com\wwwroot\index.htm`<br>
+Output: `https://mydomain.com/index.htm`
+
+By default, an entry to copy the transformed path will appear in the QuickPick list.
+
+settings.json
 
 ```
 {
 	"pathmaker.transformations": [
 		{
 			"name": "URL",
-			"action": "Browse",
 			"replacements": [{ "find": "c:/home/mydomain.com/wwwroot", "replace": "https://mydomain.com" }]
-		},
-		{
-			"name": "Include",
-			"replacements": [{ "find": "c:/home/mydomain.com/wwwroot", "replace": "" }]
-		},
-		{
-			"name": "Parent URL",
-			"action": "Browse",
-			"replacements": [
-				{ "find": "c:/home/mydomain.com/wwwroot", "replace": "https://mydomain.com" },
-				{ "find": "/_modules", "replace": "" }
-			]
 		}
 	]
 }
 ```
 
-### Explanation of sample configuration
+---
 
-This configuration provides three path transformations:
+### Case-insensitive regular expression
 
-1. "URL", replaces the local path with a domain name.
-2. "Include", generates a path that can be used as an include file.
-3. "Parent URL", replaces the local path with a domain name, and removes the "/\_modules" folder from the path.
+Input: `c:\home\mydomain.com\wwwroot\index.htm`<br>
+Input: `c:\home\mydomain.com\includes\index.htm`<br>
+Output: `https://mydomain.com/index.htm`
 
+An entry to browse the transformed path will appear in the QuickPick list.
+
+settings.json
+
+```
+{
+	"pathmaker.transformations": [
+		{
+			"name": "URL",
+			"actions": ["Browse"],
+			"replacements": [{
+				"find": "c:/home/mydomain.com/(wwwroot|includes)",
+				"replace": "https://mydomain.com",
+				"isRegex": true,
+				"flags": "i"
+			}]
+		}
+	]
+}
+```
+
+---
+
+### Multiple replacements in a single transformation
+
+Input: `c:\home\mydomain.com\wwwroot\site-modules\form.htm`<br>
+Input: `c:\home\mydomain.com\wwwroot\modules\form.htm`<br>
+Output: `https://mytestdomain.com/form.php`
+
+Entries to copy or browse the transformed path will appear in the QuickPick list.
+
+settings.json
+
+```
+{
+	"pathmaker.transformations": [
+		{
+			"name": "Testing Site URL",
+			"actions": ["Copy", "Browse"],
+			"replacements": [
+				{ "find": "c:/home/mydomain.com/wwwroot", "replace": "https://mytestdomain.com" },
+				{ "find": "(/site-modules|/modules)", "replace": "", "isRegex": true },
+				{ "find": "/form.htm", "replace": "/form.php" }
+			]
+			}]
+		}
+	]
+}
+```
+
+---
+
+### Multiple transformations
+
+settings.json
+
+```
+{
+	"pathmaker.transformations": [
+		{
+			"name": "URL 1",
+			"replacements": [{ "find": "c:/home/mydomain.com/wwwroot", "replace": "https://mydomain.com" }]
+		},
+		{
+			"name": "URL 2",
+			"actions": ["Browse"],
+			"replacements": [{
+				"find": "c:/home/mydomain.com/(wwwroot|includes)",
+				"replace": "https://mydomain.com",
+				"isRegex": true,
+				"flags": "i" }]
+		},
+		{
+			"name": "Testing Site URL",
+			"actions": ["Copy", "Browse"],
+			"replacements": [
+				{ "find": "c:/home/mydomain.com/wwwroot", "replace": "https://mytestdomain.com" },
+				{ "find": "(/site-modules|/modules)", "replace": "", "isRegex": true },
+				{ "find": "/form.htm", "replace": "/form.php" }
+			]
+		}
+	]
+}
+```
 ## Change Log
 
 [View the change log](CHANGELOG.md)
