@@ -14,6 +14,7 @@ Generated paths, displayed in the Quick Pick list, can then be copied to the cli
 - Supports unlimited path transformations and unlimited replacements within each transformation.
 - Supports multi-folder workspaces.
 - Generated paths will be displayed in VS Code's Quick Pick list.
+- Allows regular or compact list display.
 
 ## Support
 
@@ -29,6 +30,19 @@ Paths are generated using one or more transformations. Each transformation can p
 
 A replacement can be either a simple string or a regular expression.
 
+### Compact list display
+
+settings.json
+
+```
+{
+    "pathmaker.compact": <boolean>,
+    "pathmaker.transformations": [...snip...]
+}
+```
+
+When true, the transformations are displayed on one line in the QuickPick list.  When false, the transformation is displayed on two lines.  The default is false.
+
 ### Transformation properties:
 
 - "name": A custom name to describe the action. This will be displayed in the Quick Pick list.
@@ -36,7 +50,7 @@ A replacement can be either a simple string or a regular expression.
   - ["Copy"]: Displays an option to copy the selected path to the clipboard.
   - ["Browse"]: Displays an option to open the selected path in the default browser.
   - ["Copy", "Browse"]: Displays options to copy or browse the selected path.
-- "replacements": An array of find/replace pairs. The replacements take place in the order of the array. Regular expressions are supported.
+- "replacements": An array of find/replace pairs. The replacements take place in the order of the array. Regular expressions are supported.  If the array is empty, PathMaker will return the full file path.
 
 ## Example Transformations
 
@@ -51,6 +65,7 @@ settings.json
 
 ```
 {
+	"pathmaker.compact": true,
 	"pathmaker.transformations": [
 		{
 			"name": "URL",
