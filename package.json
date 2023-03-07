@@ -1,8 +1,14 @@
 {
 	"name": "pathmaker",
+	"publisher": "michaelalandawson",
 	"displayName": "PathMaker",
 	"description": "Generates and copies various paths based on the selected file.",
 	"version": "0.1.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/michaelalandawson/pathmaker.git"
+	},
+	"license": "SEE LICENSE FILE",
 	"engines": {
 		"vscode": "^1.74.0"
 	},
