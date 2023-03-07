@@ -3,6 +3,12 @@ import Window = vscode.window;
 import QuickPickItem = vscode.QuickPickItem;
 import QuickPickOptions = vscode.QuickPickOptions;
 
+type Transformation = {
+	name: string;
+	actions: [action: string];
+	replacements: [{ find: string; replace: string; isRegex: boolean; flags: string }];
+};
+
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerCommand('pathmaker.getEditorUri', getEditorUri));
 	context.subscriptions.push(vscode.commands.registerCommand('pathmaker.getExplorerContextMenuUri', getExplorerContextMenuUri));
@@ -28,12 +34,11 @@ function getEditorUri() {
 	}
 
 	buildQickPickOptions(resource);
+
+	return;
 }
 
 function buildQickPickOptions(resource: any) {
-	let opts: QuickPickOptions = { matchOnDescription: true, matchOnDetail: true, placeHolder: 'Select an action...', title: 'PathMaker' };
-	let items: QuickPickItem[] = [];
-
 	const config = vscode.workspace.getConfiguration('pathmaker', resource);
 
 	if (!config) {
@@ -41,11 +46,8 @@ function buildQickPickOptions(resource: any) {
 		return;
 	}
 
-	type Transformation = {
-		name: string;
-		actions: [action: string];
-		replacements: [{ find: string; replace: string; isRegex: boolean; flags: string }];
-	};
+	let opts: QuickPickOptions = { matchOnDescription: true, matchOnDetail: true, placeHolder: 'Select an action...', title: 'PathMaker' };
+	let items: QuickPickItem[] = [];
 
 	const transformations: [] = config.get('transformations') || [];
 
