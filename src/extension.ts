@@ -30,11 +30,6 @@ function showPathOptions() {
 	let opts: QuickPickOptions = { matchOnDescription: true, matchOnDetail: true, placeHolder: 'Select an action...', title: 'PathMaker' };
 	let items: QuickPickItem[] = [];
 
-	items.push({ label: 'Copy Path', description: resource.fsPath });
-
-	const filename = resource.fsPath.split('\\').pop();
-	items.push({ label: 'Copy Filename', description: filename });
-
 	const config = vscode.workspace.getConfiguration('pathmaker', resource);
 
 	if (!config) {
@@ -44,14 +39,16 @@ function showPathOptions() {
 
 	const transformations: [] = config.get('transformations') || [];
 
-	transformations.forEach((transformation: { name: string; replacements: [{ find: string; replace: string }] }) => {
+	transformations.forEach((transformation: { name: string; action: string; replacements: [{ find: string; replace: string }] }) => {
 		let workPath = resource.fsPath.replaceAll('\\', '/');
+
+		const action = transformation.action || 'Copy';
 
 		transformation.replacements.forEach((replacement) => {
 			workPath = workPath.replace(replacement.find, replacement.replace);
 		});
 
-		items.push({ label: `Copy ${transformation.name}`, description: workPath });
+		items.push({ label: `${action} ${transformation.name}`, description: workPath });
 	});
 
 	Window.showQuickPick(items, opts).then((selection) => {
@@ -59,7 +56,18 @@ function showPathOptions() {
 			return;
 		}
 
-		vscode.env.clipboard.writeText(selection.description as string);
+		console.log(selection);
+
+		if (selection.label.indexOf('Copy ') === 0) {
+			vscode.env.clipboard.writeText(selection.description as string);
+		} else if (selection.label.indexOf('Open ') === 0) {
+			try {
+				vscode.env.openExternal(vscode.Uri.parse(selection.description as string));
+			} catch (error) {
+				vscode.window.showErrorMessage(`${selection.description} is not a valid URL.`);
+				return;
+			}
+		}
 	});
 }
 
