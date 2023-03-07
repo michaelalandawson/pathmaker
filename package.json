@@ -79,15 +79,18 @@
 								"description": "Hint that will appear in the quick pick list",
 								"type": "string"
 							},
-							"action": {
-								"title": "Action",
-								"description": "Action to perform when an option is selected",
-								"type": "string",
-								"default": "Copy",
-								"enum": [
-									"Copy",
-									"Browse"
-								]
+							"actions": {
+								"title": "Actions",
+								"description": "Actions to perform when an option is selected",
+								"type": "array",
+								"items": {
+									"type": "string",
+									"uniqueItems": true,
+									"enum": [
+										"Copy",
+										"Browse"
+									]
+								}
 							},
 							"replacements": {
 								"title": "Replacements",

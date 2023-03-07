@@ -43,7 +43,7 @@ function buildQickPickOptions(resource: any) {
 
 	type Transformation = {
 		name: string;
-		action: string;
+		actions: [action: string];
 		replacements: [{ find: string; replace: string; isRegex: boolean; flags: string }];
 	};
 
@@ -52,7 +52,7 @@ function buildQickPickOptions(resource: any) {
 	transformations.forEach((transformation: Transformation) => {
 		let workPath = resource.fsPath.replaceAll('\\', '/');
 
-		const action = transformation.action || 'Copy';
+		const actions = transformation.actions || ['Copy'];
 
 		transformation.replacements.forEach((replacement) => {
 			if (replacement.isRegex) {
@@ -63,7 +63,9 @@ function buildQickPickOptions(resource: any) {
 			}
 		});
 
-		items.push({ label: `${action === 'Copy' ? `$(clippy)` : `$(globe)`} ${action} ${transformation.name}`, detail: workPath });
+		actions.forEach((action: string) => {
+			items.push({ label: `${action === 'Copy' ? `$(clippy)` : `$(globe)`} ${action} ${transformation.name}`, detail: workPath });
+		});
 	});
 
 	Window.showQuickPick(items, opts).then((selection) => {
