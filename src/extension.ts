@@ -52,7 +52,7 @@ function buildQickPickOptions(resource: any) {
 			workPath = workPath.replace(replacement.find, replacement.replace);
 		});
 
-		items.push({ label: `${action} ${transformation.name}`, detail: workPath });
+		items.push({ label: `${action === 'Copy' ? `$(clippy)` : `$(globe)`} ${action} ${transformation.name}`, detail: workPath });
 	});
 
 	Window.showQuickPick(items, opts).then((selection) => {
@@ -60,9 +60,9 @@ function buildQickPickOptions(resource: any) {
 			return;
 		}
 
-		if (selection.label.indexOf('Copy ') === 0) {
+		if (selection.label.indexOf('Copy ') > 0) {
 			vscode.env.clipboard.writeText(selection.detail as string);
-		} else if (selection.label.indexOf('Browse ') === 0) {
+		} else if (selection.label.indexOf('Browse ') > 0) {
 			try {
 				vscode.env.openExternal(vscode.Uri.parse(selection.detail as string));
 			} catch (error) {
