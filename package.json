@@ -20,25 +20,26 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "pathmaker.showPathOptions",
+				"command": "pathmaker.getEditorUri",
 				"title": "PathMaker..."
 			},
 			{
-				"command": "pathmaker.explorerContextMenu",
+				"command": "pathmaker.getExplorerContextMenuUri",
 				"title": "PathMaker..."
 			}
 		],
 		"menus": {
 			"commandPalette": [
 				{
-					"command": "pathmaker.explorerContextMenu",
+					"command": "pathmaker.getExplorerContextMenuUri",
 					"when": "false"
 				}
 			],
 			"explorer/context": [
 				{
-					"command": "pathmaker.explorerContextMenu",
-					"group": "6_copypath"
+					"command": "pathmaker.getExplorerContextMenuUri",
+					"group": "6_copypath",
+					"when": "activeViewlet == 'workbench.view.explorer' && !explorerResourceIsFolder"
 				}
 			]
 		},

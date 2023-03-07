@@ -4,15 +4,15 @@ import QuickPickItem = vscode.QuickPickItem;
 import QuickPickOptions = vscode.QuickPickOptions;
 
 export function activate(context: vscode.ExtensionContext) {
-	context.subscriptions.push(vscode.commands.registerCommand('pathmaker.showPathOptions', showPathOptions));
-	context.subscriptions.push(vscode.commands.registerCommand('pathmaker.explorerContextMenu', explorerContextMenu));
+	context.subscriptions.push(vscode.commands.registerCommand('pathmaker.getEditorUri', getEditorUri));
+	context.subscriptions.push(vscode.commands.registerCommand('pathmaker.getExplorerContextMenuUri', getExplorerContextMenuUri));
 }
 
-function explorerContextMenu(resource: any) {
-	buildOptions(resource);
+function getExplorerContextMenuUri(resource: any) {
+	buildQickPickOptions(resource);
 }
 
-function showPathOptions() {
+function getEditorUri() {
 	const editor = Window.activeTextEditor;
 
 	if (!editor || editor.document.isUntitled) {
@@ -27,10 +27,10 @@ function showPathOptions() {
 		return;
 	}
 
-	buildOptions(resource);
+	buildQickPickOptions(resource);
 }
 
-function buildOptions(resource: any) {
+function buildQickPickOptions(resource: any) {
 	let opts: QuickPickOptions = { matchOnDescription: true, matchOnDetail: true, placeHolder: 'Select an action...', title: 'PathMaker' };
 	let items: QuickPickItem[] = [];
 
