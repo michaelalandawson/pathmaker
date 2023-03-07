@@ -41,6 +41,13 @@
 					"group": "6_copypath",
 					"when": "activeViewlet == 'workbench.view.explorer' && !explorerResourceIsFolder"
 				}
+			],
+			"editor/context": [
+				{
+					"command": "pathmaker.getEditorUri",
+					"group": "6_copypath",
+					"when": "editorFocus && isFileSystemResource"
+				}
 			]
 		},
 		"configuration": {
