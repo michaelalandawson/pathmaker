@@ -52,7 +52,7 @@ function buildQickPickOptions(resource: any) {
 			workPath = workPath.replace(replacement.find, replacement.replace);
 		});
 
-		items.push({ label: `${action} ${transformation.name}`, description: workPath });
+		items.push({ label: `${action} ${transformation.name}`, detail: workPath });
 	});
 
 	Window.showQuickPick(items, opts).then((selection) => {
@@ -61,12 +61,12 @@ function buildQickPickOptions(resource: any) {
 		}
 
 		if (selection.label.indexOf('Copy ') === 0) {
-			vscode.env.clipboard.writeText(selection.description as string);
+			vscode.env.clipboard.writeText(selection.detail as string);
 		} else if (selection.label.indexOf('Browse ') === 0) {
 			try {
-				vscode.env.openExternal(vscode.Uri.parse(selection.description as string));
+				vscode.env.openExternal(vscode.Uri.parse(selection.detail as string));
 			} catch (error) {
-				vscode.window.showErrorMessage(`${selection.description} is not a valid URL.`);
+				vscode.window.showErrorMessage(`${selection.detail} is not a valid URL.`);
 				return;
 			}
 		}
