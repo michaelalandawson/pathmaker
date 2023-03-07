@@ -14,6 +14,12 @@ Generated paths, displayed in the Quick Pick list, can then be copied to the cli
 - Supports multi-folder workspaces.
 - Generated paths will be displayed in VS Code's Quick Pick list.
 
+## Support
+
+If you find this extension to be useful, please consider supporting further development.
+
+[<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif"/>](https://www.paypal.com/donate/?business=UH4GUUNGPUXMA&no_recurring=1&item_name=Thank+you+for+supporting+future+development+of+this+extension+and+others%21&currency_code=USD)
+
 ## Configuration
 
 Paths are generated using one or more transformations. Each transformation contains a name and an array of replacements.
