@@ -41,15 +41,26 @@ function buildQickPickOptions(resource: any) {
 		return;
 	}
 
+	type Transformation = {
+		name: string;
+		action: string;
+		replacements: [{ find: string; replace: string; isRegex: boolean; flags: string }];
+	};
+
 	const transformations: [] = config.get('transformations') || [];
 
-	transformations.forEach((transformation: { name: string; action: string; replacements: [{ find: string; replace: string }] }) => {
+	transformations.forEach((transformation: Transformation) => {
 		let workPath = resource.fsPath.replaceAll('\\', '/');
 
 		const action = transformation.action || 'Copy';
 
 		transformation.replacements.forEach((replacement) => {
-			workPath = workPath.replace(replacement.find, replacement.replace);
+			if (replacement.isRegex) {
+				var regExp = new RegExp(replacement.find, replacement.flags || '');
+				workPath = workPath.replace(regExp, replacement.replace);
+			} else {
+				workPath = workPath.replace(replacement.find, replacement.replace);
+			}
 		});
 
 		items.push({ label: `${action === 'Copy' ? `$(clippy)` : `$(globe)`} ${action} ${transformation.name}`, detail: workPath });

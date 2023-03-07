@@ -10,6 +10,7 @@ Generated paths, displayed in the Quick Pick list, can then be copied to the cli
 
 - Generates multiple path formats based on the selected file or current editor.
 - Transforms the file path using user-specified values.
+- Supports regular expressions.
 - Supports unlimited path transformations and unlimited replacements within each transformation.
 - Supports multi-folder workspaces.
 - Generated paths will be displayed in VS Code's Quick Pick list.
@@ -35,7 +36,7 @@ Path separators are normalized to "/" before any user transformations are proces
   - ["Copy"]: Displays an option to copy the selected path to the clipboard.
   - ["Browse"]: Displays an option to open the selected path in the default browser.
   - ["Copy", "Browse"]: Displays options to copy or browse the selected path.
-- "replacements": An array of find/replace pairs. The replacements take place in the order of the array. Regular expressions are not currently supported.
+- "replacements": An array of find/replace pairs. The replacements take place in the order of the array. Regular expressions are supported.
 
 ### Sample configration:
 
