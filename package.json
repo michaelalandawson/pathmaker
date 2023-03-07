@@ -28,7 +28,7 @@
 			"type": "object",
 			"properties": {
 				"pathmaker.transformations": {
-					"title": "Pathmaker path transformations",
+					"title": "PathMaker path transformations",
 					"description": "Array of objects that will transform the path of the selected file.",
 					"type": "array",
 					"scope": "resource",
